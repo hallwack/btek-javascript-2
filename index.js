@@ -18,8 +18,8 @@ const shippingCost = (length) => {
   }
 
   if (length <= 2) {
-    console.log(currencyFormat.format(cost));
-    console.log(currencyFormat.format(tax(cost)));
+    console.log(`Total Ongkos Kirim: ${currencyFormat.format(cost)}`);
+    console.log(`Biaya Layanan: ${currencyFormat.format(tax(cost))}`);
   } else if (length > 2) {
     let newCost = cost;
     let multipleCost = 0;
@@ -28,8 +28,8 @@ const shippingCost = (length) => {
       multipleCost += 5000;
     }
     newCost += multipleCost;
-    console.log(currencyFormat.format(newCost));
-    console.log(currencyFormat.format(tax(newCost)));
+    console.log(`Total Ongkos Kirim: ${currencyFormat.format(newCost)}`);
+    console.log(`Biaya Layanan: ${currencyFormat.format(tax(newCost))}`);
   }
 };
 
