@@ -33,10 +33,21 @@ const shippingCost = (length) => {
   }
 };
 
-const question = () => {
+const questionFunc = () => {
   rl.question("Masukkan jarak tempuh (dalam kilometer): ", (length) => {
     shippingCost(length);
   });
 };
 
-question();
+const loop = new Promise((resolve, reject) => {
+  rl.on("keypress", (key) => {
+    rl.question("Apakah akan menjalankan program lagi?");
+    if (key.name == "n") {
+      reject(rl.close());
+    } else {
+      resolve("jalan");
+    }
+  })
+});
+
+loop.then(questionFunc()).catch(rl.close());
