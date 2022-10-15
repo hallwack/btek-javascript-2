@@ -10,6 +10,11 @@ const currencyFormat = new Intl.NumberFormat("id-ID", {
   currency: "IDR",
 });
 
+const addQuestion = () => {
+  rl.setPrompt("Masukkan Jarak: ");
+  rl.prompt();
+};
+
 const shippingCost = (length) => {
   let cost = 8000;
 
@@ -34,24 +39,23 @@ const shippingCost = (length) => {
 };
 
 const questionFunc = () => {
-  rl.question("Masukkan jarak tempuh (dalam kilometer): ", (length) => {
-    shippingCost(length);
+  return new Promise((resolve, reject) => {
+    rl.on("line", (length) => {
+      var length = parseInt(length);
+      if (!length) {
+        reject(false);
+      }
+      shippingCost(length);
+      resolve(true);
+    });
   });
 };
 
-const promise = new Promise((resolve, reject) => {
-  setTimeout(() => {
-    resolve(questionFunc());
-  }, 1000);
-});
-
 async function whileLooping() {
-  while (true) {
-    await new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve(questionFunc());
-      }, 1000);
-    });
+  var running = true;
+  while (running) {
+    addQuestion();
+    running = await questionFunc();
   }
 }
 
