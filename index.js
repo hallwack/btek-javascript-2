@@ -39,16 +39,19 @@ const questionFunc = () => {
   });
 };
 
-const loop = new Promise((resolve, reject) => {
+const promise = new Promise((resolve, reject) => {
   setTimeout(() => {
     resolve(questionFunc());
-  }, 500);
+  }, 1000);
 });
 
 async function whileLooping() {
-  let state = true;
-  while (state) {
-    await loop;
+  while (true) {
+    await new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(questionFunc());
+      }, 1000);
+    });
   }
 }
 
